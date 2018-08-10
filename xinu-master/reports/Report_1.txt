@@ -1,0 +1,12 @@
+Answer 1: When a child exits, there must be some process that waits on it to get its exit code. The time during which child has exited and is waiting, while the parent is reading the exit code, during this time the child process is called zombie. Zombie processes don't take any memory or CPU and only take space in the process table. 
+whereas if the parent process exits and its children are still running, those children are called orphan processes. The orphan processes are adopted by init and they can use any resource just like a normal process. One interesting thing to note here is init immediately reads the exit code of its children. So if a parent process exits without waiting for its children, its children will not become zombies as they will be adopted by init and init will read their exit codes immediately as soon as they finish.
+
+Answer 2: When the child process calls the exec system call to execute a new process, the current executing process replaces the previously executing process to run the mentioned path file. This is also called overlay. All the segments including text, data and stack are replaced by the current process. if execl is not successful it does not return to the invoking function as the invoking function's image was replaced. 
+
+
+References:
+http://www.cs.uregina.ca/Links/class-info/330/Fork/fork.html
+https://en.wikipedia.org/wiki/Exec_(system_call)
+https://stackoverflow.com/questions/20688982/zombie-process-vs-orphan-process
+
+
